@@ -1,17 +1,37 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+const dbConfig = require('./server/config/bd');
+const categoriaRoutes = require('./server/routes/categoria.routes');
+const productoRoutes = require('./server/routes/producto.routes');
 
 const app = express();
+
+// Middleware
+app.use(cors());  // Configurar CORS
+app.use(bodyParser.json());  // Analizar solicitudes JSON
+app.use(bodyParser.urlencoded({ extended: true }));  // Analizar solicitudes URL codificadas
+
+// Conexión a la base de datos
+dbConfig
+  .authenticate()
+  .then(() => console.log('Conexión a la base de datos establecida.'))
+  .catch((error) => console.error('No se pudo conectar a la base de datos:', error));
+
+// Rutas
+app.use('/api/categorias/', categoriaRoutes);
+
+app.use('/api/productos/', productoRoutes);
+
+// Prueba navegador
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to IVI application." });
+});
+
 const PORT = process.env.PORT || 4000;
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.get('/', (req, res) => {
-  res.send('Hola mundo de apis xxd, holis Ivichito');
-});
-
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
+
+
