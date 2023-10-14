@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const dbConfig = require('./server/config/bd');
 const categoriaRoutes = require('./server/routes/categoria.routes');
+const productoRoutes = require('./server/routes/producto.routes');
 
 const app = express();
 
@@ -18,7 +19,9 @@ dbConfig
   .catch((error) => console.error('No se pudo conectar a la base de datos:', error));
 
 // Rutas
-app.use('/api', categoriaRoutes);
+app.use('/api/categorias/', categoriaRoutes);
+
+app.use('/api/productos/', productoRoutes);
 
 // Prueba navegador
 app.get("/", (req, res) => {

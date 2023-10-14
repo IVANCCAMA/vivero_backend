@@ -2,16 +2,25 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/bd');
 
 const Categoria = sequelize.define('Categoria', {
-    nombre: {
+    // atributos de tabla
+    id_categoria: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+    },
+    nombre_categoria: {
         type: DataTypes.STRING,
         allowNull: false,
-        field: 'nombre_categoria',  // Nombre de la columna en la base de datos
     },
-    descripcion: {
+    descripcion_categoria: {
         type: DataTypes.STRING,
-        allowNull: false,
-        field: 'descripcion_categoria',  // Nombre correcto de la columna en la base de datos
+        allowNull: true, 
     },
+}, {
+    // nombre de la tabla
+    tableName: 'categoria',
+    timestamps: false, // desabilita la creacion automatica de fechas
 });
 
 module.exports = Categoria;
