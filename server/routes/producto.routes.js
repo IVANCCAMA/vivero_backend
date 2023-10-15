@@ -8,10 +8,11 @@ router.get('/', producto.obtenerProductos);
 // crear producto
 router.post('/', producto.crearProducto);
 
-// elimiar producto
-router.delete('/', producto.obtenerProductos);
-
 // modificar producto
-router.put('/:id', producto.obtenerProductos);
+router.put('/:id', producto.modificarProducto);
+
+// elimiar producto
+router.delete('/:id', producto.eliminarProducto);
+
 
 module.exports = router;

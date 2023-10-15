@@ -8,10 +8,10 @@ router.get('/', categoria.obtenerCategorias);
 // crear categoria
 router.post('/', categoria.crearCategoria);
 
-// elimiar categoria
-router.delete('/', categoria.obtenerCategorias);
-
 // modificar categoria
-router.put('/:id', categoria.obtenerCategorias);
+router.put('/:id', categoria.modificarCategoria);
+
+// elimiar categoria
+router.delete('/:id', categoria.eliminarCategoria);
 
 module.exports = router;
