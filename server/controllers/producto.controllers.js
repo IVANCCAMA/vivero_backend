@@ -61,6 +61,20 @@ const obtenerProductos = async (req, res) => {
     }
 };
 
+const obtenerProducto = async (req, res) => {
+    const idProducto = req.params.id;
+    try {
+      const producto = await Producto.findByPk(idProducto);
+      if (!producto) {
+        return res.status(404).json({ error: 'Categoría no encontrada' });
+      }
+      res.status(200).json(producto);
+    } catch (error) {
+      console.error('Error al obtener el producto:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  };
+
 const modificarProducto = async (req, res) => {
     const idProducto = req.params.id;
     const { 
@@ -122,4 +136,4 @@ const eliminarProducto = async (req, res) => {
 
 
 
-module.exports = { crearProducto , obtenerProductos, modificarProducto, eliminarProducto };
+module.exports = { crearProducto , obtenerProductos, modificarProducto, eliminarProducto,obtenerProducto };
