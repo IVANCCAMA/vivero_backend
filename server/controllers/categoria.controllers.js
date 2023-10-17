@@ -18,7 +18,7 @@ const crearCategoria = async (req, res) => {
 
 const obtenerCategorias = async (req, res) => {
   try {
-    const categorias = await Categoria.findAll({
+    const categorias = await Categoria.findAll({ 
       attributes: ['id_categoria', 'nombre_categoria', 'descripcion_categoria'], // Especifica los atributos que deseas seleccionar
     });
     return res.json(categorias);
@@ -27,6 +27,21 @@ const obtenerCategorias = async (req, res) => {
     return res.status(500).json({ error: 'Error al obtener categorías', message: error.message });
   }
 };
+
+const obtenerCategoria = async (req, res) => {
+  const idCategoria = req.params.id;
+  try {
+    const categoria = await Categoria.findByPk(idCategoria);
+    if (!categoria) {
+      return res.status(404).json({ error: 'Categoría no encontrada' });
+    }
+    res.status(200).json(categoria);
+  } catch (error) {
+    console.error('Error al obtener la categoría:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
 
 const modificarCategoria = async (req, res) => {
   const idCategoria = req.params.id;
@@ -74,4 +89,4 @@ const eliminarCategoria = async (req, res) => {
   }
 };
 
-module.exports = { obtenerCategorias, crearCategoria, modificarCategoria, eliminarCategoria};
+module.exports = { obtenerCategorias, crearCategoria, modificarCategoria, eliminarCategoria, obtenerCategoria};
