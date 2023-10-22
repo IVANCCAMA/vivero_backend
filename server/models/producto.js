@@ -54,6 +54,14 @@ const Producto = sequelize.define('Producto', {
         type: DataTypes.DATE,
         allowNull: true,
     },
+    precio_inicial_producto: {
+        type: DataTypes.REAL,
+        allowNull: false,
+    } ,
+    margen_producto: {
+        type: DataTypes.REAL,
+        allowNull: false,
+    } ,
 }, {
     // nombre de la tabla
     tableName: 'producto',
