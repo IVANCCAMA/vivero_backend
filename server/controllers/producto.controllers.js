@@ -3,7 +3,8 @@ const Producto = require('../models/producto');
 
 const crearProducto = async (req, res) => {
     const { id_categoria, nombre_producto, precio_total_producto, tamanio_producto, 
-        imagen_producto ,descripcion_producto, stok_actual_producto, stok_min_producto} = req.body;
+        imagen_producto ,descripcion_producto, stok_actual_producto, stok_min_producto, precio_inicial_producto,
+        margen_producto} = req.body;
 
     try {
         const nuevoProducto = await Producto.create({
@@ -14,7 +15,9 @@ const crearProducto = async (req, res) => {
             imagen_producto,
             descripcion_producto,
             stok_actual_producto,
-            stok_min_producto
+            stok_min_producto,
+            precio_inicial_producto,
+            margen_producto
         });
         // Formatea la fecha de creación antes de enviarla en la respuesta
         const fechaCreacion = new Date(nuevoProducto.fecha_creacion);
@@ -61,6 +64,20 @@ const obtenerProductos = async (req, res) => {
     }
 };
 
+const obtenerProducto = async (req, res) => {
+    const idProducto = req.params.id;
+    try {
+      const producto = await Producto.findByPk(idProducto);
+      if (!producto) {
+        return res.status(404).json({ error: 'Categoría no encontrada' });
+      }
+      res.status(200).json(producto);
+    } catch (error) {
+      console.error('Error al obtener el producto:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  };
+
 const modificarProducto = async (req, res) => {
     const idProducto = req.params.id;
     const { 
@@ -70,7 +87,9 @@ const modificarProducto = async (req, res) => {
         imagen_producto,
         descripcion_producto,
         stok_actual_producto,
-        stok_min_producto
+        stok_min_producto,
+        precio_inicial_producto,
+        margen_producto
      } = req.body;
   
     try {
@@ -89,7 +108,9 @@ const modificarProducto = async (req, res) => {
         imagen_producto,
         descripcion_producto,
         stok_actual_producto,
-        stok_min_producto
+        stok_min_producto,
+        precio_inicial_producto,
+        margen_producto
       });
   
       return res.status(200).json({ message: 'Producto modificada exitosamente', categoria: productoModificado });
@@ -122,4 +143,4 @@ const eliminarProducto = async (req, res) => {
 
 
 
-module.exports = { crearProducto , obtenerProductos, modificarProducto, eliminarProducto };
+module.exports = { crearProducto , obtenerProductos, modificarProducto, eliminarProducto,obtenerProducto };
