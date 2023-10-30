@@ -1,4 +1,3 @@
- 
 const Producto = require('../models/producto');
 
 const crearProducto = async (req, res) => {
@@ -67,16 +66,16 @@ const obtenerProductos = async (req, res) => {
 const obtenerProducto = async (req, res) => {
     const idProducto = req.params.id;
     try {
-      const producto = await Producto.findByPk(idProducto);
-      if (!producto) {
-        return res.status(404).json({ error: 'Categoría no encontrada' });
-      }
-      res.status(200).json(producto);
+        const producto = await Producto.findByPk(idProducto);
+        if (!producto) {
+            return res.status(404).json({ error: 'Categoría no encontrada' });
+        }
+        res.status(200).json(producto);
     } catch (error) {
-      console.error('Error al obtener el producto:', error);
-      res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error al obtener el producto:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
     }
-  };
+};
 
 const modificarProducto = async (req, res) => {
     const idProducto = req.params.id;
@@ -90,54 +89,54 @@ const modificarProducto = async (req, res) => {
         stok_min_producto,
         precio_inicial_producto,
         margen_producto
-     } = req.body;
-  
+    } = req.body;
+
     try {
-      const productoModificado = await Producto.findByPk(idProducto);
-  
-      // Verificar exitencia
-      if (!productoModificado) {
-        return res.status(404).json({ error: 'Producto no encontrada' });
-      }
-  
-      // Actualizar el producto con los nuevos datos
-      await productoModificado.update({
-        nombre_producto,
-        precio_total_producto,
-        tamanio_producto, 
-        imagen_producto,
-        descripcion_producto,
-        stok_actual_producto,
-        stok_min_producto,
-        precio_inicial_producto,
-        margen_producto
-      });
-  
-      return res.status(200).json({ message: 'Producto modificada exitosamente', categoria: productoModificado });
+        const productoModificado = await Producto.findByPk(idProducto);
+
+        // Verificar exitencia
+        if (!productoModificado) {
+            return res.status(404).json({ error: 'Producto no encontrada' });
+        }
+
+        // Actualizar el producto con los nuevos datos
+        await productoModificado.update({
+            nombre_producto,
+            precio_total_producto,
+            tamanio_producto, 
+            imagen_producto,
+            descripcion_producto,
+            stok_actual_producto,
+            stok_min_producto,
+            precio_inicial_producto,
+            margen_producto
+        });
+
+    return res.status(200).json({ message: 'Producto modificada exitosamente', categoria: productoModificado });
     } catch (error) {
-      console.error('Error al modificar producto:', error);
-      return res.status(500).json({ error: 'Error al modificar producto', message: error.message });
+        console.error('Error al modificar producto:', error);
+        return res.status(500).json({ error: 'Error al modificar producto', message: error.message });
     }
 };
 
 const eliminarProducto = async (req, res) => {
     const idProducto = req.params.id;
-  
+
     try {
-      const productoEliminado = await Producto.findByPk(idProducto);
-  
-      // Verificar existencia
-      if (!productoEliminado) {
-        return res.status(404).json({ error: 'Producto no encontrada' });
-      }
-  
-      // Eliminar la Producto
-      await productoEliminado.destroy();
-  
-      return res.status(200).json({ mensaje: 'Producto eliminada exitosamente' });
+        const productoEliminado = await Producto.findByPk(idProducto);
+    
+        // Verificar existencia
+        if (!productoEliminado) {
+            return res.status(404).json({ error: 'Producto no encontrada' });
+        }
+    
+        // Eliminar la Producto
+        await productoEliminado.destroy();
+    
+        return res.status(200).json({ mensaje: 'Producto eliminada exitosamente' });
     } catch (error) {
-      console.error('Error al eliminar Producto:', error);
-      return res.status(500).json({ error: 'Error al eliminar Producto', message: error.message });
+        console.error('Error al eliminar Producto:', error);
+        return res.status(500).json({ error: 'Error al eliminar Producto', message: error.message });
     }
 };
 

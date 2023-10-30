@@ -2,14 +2,14 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/bd');
 const Categoria = require('./categoria'); 
 
-const Producto = sequelize.define('Producto', {
+const Usuario = sequelize.define('Usuario', {
     // atributos de tabla
-    id_producto: {
+    id_usuario: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
-    },  
+    } ,  
     id_categoria: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -17,32 +17,32 @@ const Producto = sequelize.define('Producto', {
             model: Categoria, // Hace referencia al modelo de Categoria
             key: 'id_categoria' // Hace referencia a la columna id_categoria de Categoria
         }
-    },
-    nombre_producto: {
+    } ,
+    nombre_usuario: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    precio_total_producto: {
+    } ,
+    precio_total_usuario: {
         type: DataTypes.FLOAT,
         allowNull: false,
-    },
-    tamanio_producto: {
+    } ,
+    tamanio_usuario: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    imagen_producto: {
+    } ,
+    imagen_usuario: {
         type: DataTypes.STRING,
         allowNull: true,
-    },
-    descripcion_producto: {
+    } ,
+    descripcion_usuario: {
         type: DataTypes.STRING,
         allowNull: true,
-    },
-    stok_actual_producto: {
+    } ,
+    stok_actual_usuario: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    stok_min_producto: {
+    stok_min_usuario: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
@@ -54,18 +54,18 @@ const Producto = sequelize.define('Producto', {
         type: DataTypes.DATE,
         allowNull: true,
     },
-    precio_inicial_producto: {
+    precio_inicial_usuario: {
         type: DataTypes.REAL,
         allowNull: false,
-    },
-    margen_producto: {
+    } ,
+    margen_usuario: {
         type: DataTypes.REAL,
         allowNull: false,
-    },
+    } ,
 }, {
     // nombre de la tabla
-    tableName: 'producto',
+    tableName: 'usuario',
     timestamps: false, // desabilita la creacion automatica de fechas
 });
 
-module.exports = Producto;
+module.exports = Usuario;
