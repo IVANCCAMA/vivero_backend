@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const dbConfig = require('./server/config/bd');
 const categoriaRoutes = require('./server/routes/categoria.routes');
 const productoRoutes = require('./server/routes/producto.routes');
+const usuarioRoutes = require('./server/routes/usuario.routes')
+const tipo_usuarioRoutes = require('./server/routes/tipoUsuario.routes');
 
 const app = express();
 
@@ -22,6 +24,10 @@ dbConfig
 app.use('/api/categorias/', categoriaRoutes);
 
 app.use('/api/productos/', productoRoutes);
+
+app.use('/api/usuarios', usuarioRoutes);
+
+app.use('/api/tipoUsuario', tipo_usuarioRoutes);
 
 // Prueba navegador
 app.get("/", (req, res) => {

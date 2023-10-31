@@ -1,21 +1,20 @@
-import { Router } from 'express';
-const router = Router();
-import { obtenerUsuarios, obtenerUsuario, crearUsuario, modificarUsuario, eliminarUsuario } from '../controllers/usuario.controllers';
+const express = require('express');
+const router = express.Router();
+const usuario = require('../controllers/usuario.controllers');
 
 // obtener usuarios
-router.get('/', obtenerUsuarios);
+router.get('/', usuario.obtenerUsuarios);
 
 // obtener usuario
-router.get('/:id', obtenerUsuario);
+router.get('/:id', usuario.obtenerUsuario);
 
 // crear usuario
-router.post('/', crearUsuario);
+router.post('/', usuario.crearUsuario);
 
 // modificar usuario
-router.put('/:id', modificarUsuario);
+router.put('/:id', usuario.modificarUsuario);
 
 // elimiar usuario
-router.delete('/:id', eliminarUsuario);
+router.delete('/:id', usuario.eliminarUsuario);
 
-
-export default router;
+module.exports = router;
