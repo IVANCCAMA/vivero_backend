@@ -1,3 +1,4 @@
+const Categoria = require('../models/categoria');
 const Producto = require('../models/producto');
 
 const crearProducto = async (req, res) => {
@@ -34,7 +35,9 @@ const crearProducto = async (req, res) => {
 
 const obtenerProductos = async (req, res) => {
     try {
-        const productos = await Producto.findAll();
+        const productos = await Producto.findAll({
+            include: Categoria,
+        });
 
         // Formatea las fechas antes de enviarlas en la respuesta
         const productosFormateados = productos.map(producto => {
@@ -48,11 +51,13 @@ const obtenerProductos = async (req, res) => {
             };
 
             const fechaCreacion = new Date(producto.fecha_creacion); // Convierte a Date
-            const fechaModificacion = new Date(producto.fecha_modificacion); // Convierte a Date
+            const fechaModificacion = producto.fecha_modificacion ? new Date(producto.fecha_modificacion) : null; // Convierte a Date si no es null
+            
             return {
                 ...producto.toJSON(),
-                fecha_creacion: fechaCreacion.toLocaleString('es-ES', options),  // Formatea la fecha a tu preferencia
-                fecha_modificacion: fechaModificacion.toLocaleString('es-ES', options),
+                fecha_creacion: fechaCreacion.toLocaleString('es-ES', options),  // Formatea la fecha
+                fecha_modificacion: fechaModificacion ? fechaModificacion.toLocaleString('es-ES', options) : null, // Formatea si no es null
+                nombre_categoria: producto.Categorium ? producto.Categorium.nombre_categoria : null, // Obtiene solo el nombre_categoria
             };
         });
 
@@ -66,11 +71,34 @@ const obtenerProductos = async (req, res) => {
 const obtenerProducto = async (req, res) => {
     const idProducto = req.params.id;
     try {
-        const producto = await Producto.findByPk(idProducto);
+        const producto = await Producto.findByPk(idProducto, {
+            include: Categoria
+        });
         if (!producto) {
-            return res.status(404).json({ error: 'Categoría no encontrada' });
+            return res.status(404).json({ error: 'Producto no encontrada' });
         }
-        res.status(200).json(producto);
+        const options = {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+        };
+
+        const fechaCreacion = new Date(producto.fecha_creacion);
+        const fechaModificacion = producto.fecha_modificacion
+            ? new Date(producto.fecha_modificacion)
+            : null;
+
+        const formattedProducto = {
+            ...producto.toJSON(),
+            fecha_creacion: fechaCreacion.toLocaleString('es-ES', options),
+            fecha_modificacion: fechaModificacion ? fechaModificacion.toLocaleString('es-ES', options): null,
+            nombre_categoria: producto.Categorium ? producto.Categorium.nombre_categoria : null,
+        };
+        
+        return res.status(200).json(formattedProducto);
     } catch (error) {
         console.error('Error al obtener el producto:', error);
         res.status(500).json({ error: 'Error interno del servidor' });

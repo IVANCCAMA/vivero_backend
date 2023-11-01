@@ -2,7 +2,7 @@ const TipoUsuario = require('../models/tipoUsuario');
 
 const crearTipoUsuario = async (req, res) => {
   const { tipo_usuario } = req.body;
-
+  
   try {
     const nuevoTipoUsuario = await TipoUsuario.create({
       tipo_usuario
