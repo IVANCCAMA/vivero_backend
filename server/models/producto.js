@@ -13,10 +13,10 @@ const Producto = sequelize.define('Producto', {
     id_categoria: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
+        /* references: {
             model: Categoria, // Hace referencia al modelo de Categoria
             key: 'id_categoria' // Hace referencia a la columna id_categoria de Categoria
-        }
+        } */
     },
     nombre_producto: {
         type: DataTypes.STRING,
@@ -67,5 +67,7 @@ const Producto = sequelize.define('Producto', {
     tableName: 'producto',
     timestamps: false, // desabilita la creacion automatica de fechas
 });
+
+Producto.belongsTo(Categoria, { foreignKey: 'id_categoria' });
 
 module.exports = Producto;
