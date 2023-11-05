@@ -2,7 +2,7 @@ const Usuario = require('../models/usuario');
 
 const crearUsuario = async (req, res) => {
     const { id_tipo_usuario, nombre_usuario, ci_usuario, celular_usuario, 
-        correo_usuario ,fecha_nacimiento_usuario, genero_usuario,
+        correo_usuario ,fecha_nacimiento_usuario, genero_usuario,contrasenia_usuario,
         } = req.body;
 
     try {
@@ -14,6 +14,7 @@ const crearUsuario = async (req, res) => {
             correo_usuario,
             fecha_nacimiento_usuario,
             genero_usuario,
+            contrasenia_usuario,
         });
         // Formatea la fecha de creación antes de enviarla en la respuesta
         const fechaCreacion = new Date(nuevoUsuario.fecha_registro_usuario);
@@ -65,7 +66,7 @@ const obtenerUsuario = async (req, res) => {
     try {
         const usuario = await Usuario.findByPk(idUsuario);
         if (!usuario) {
-            return res.status(404).json({ error: 'Categoría no encontrada' });
+            return res.status(404).json({ error: 'Usuario no encontrado' });
         }
         res.status(200).json(usuario);
     } catch (error) {
@@ -83,6 +84,7 @@ const modificarUsuario = async (req, res) => {
         correo_usuario,
         fecha_nacimiento_usuario,
         genero_usuario,
+        contrasenia_usuario
     } = req.body;
 
     try {
@@ -90,7 +92,7 @@ const modificarUsuario = async (req, res) => {
 
         // Verificar exitencia
         if (!usuarioModificado) {
-            return res.status(404).json({ error: 'Usuario no encontrada' });
+            return res.status(404).json({ error: 'Usuario no encontrado' });
         }
 
         // Actualizar el usuario con los nuevos datos
@@ -100,7 +102,8 @@ const modificarUsuario = async (req, res) => {
             celular_usuario, 
             correo_usuario,
             fecha_nacimiento_usuario,
-            genero_usuario
+            genero_usuario,
+            contrasenia_usuario
         });
 
     return res.status(200).json({ message: 'Usuario modificada exitosamente', tipo_usuario: usuarioModificado });

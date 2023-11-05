@@ -46,6 +46,10 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
+    contrasenia_usuario: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
 }, {
     // nombre de la tabla
     tableName: 'usuario',
