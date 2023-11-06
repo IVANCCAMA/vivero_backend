@@ -81,26 +81,29 @@ const obtenerUsuario = async (req, res) => {
 /* INICIAR SESION */
 
 const autenticarUsuario = async (req, res) => {
+    const { correo_usuario, contrasenia_usuario } = req.body; // Suponiendo que los datos del usuario se envían en el cuerpo de la solicitud
+
     try {
-        const { correo_usuario, contrasenia_usuario } = req.body;
-        const usuario = await Usuario.findOne({ where: { correo_usuario } });
-
-        if (!usuario) {
-            return res.status(404).json({ message: "Usuario no encontrado" });
+        const user = await Usuario.findOne({ where: { correo_usuario } });
+        
+        if (!user) {
+            // El usuario no se encontró en la base de datos
+            return res.status(401).json({ message: 'Credenciales incorrectas'});
         }
-
-    const contraseniaValida = await verificarContraseña(contrasenia_usuario, usuario.contraseña);
-
-    if (!contraseniaValida) {
-        return res.status(401).json({ message: "Contraseña incorrecta" });
-    }
-
-    res.status(200).json({ message: "Autenticación exitosa" });
+    
+        if (user.contrasenia_usuario === contrasenia_usuario) {
+            // Las credenciales son correctas, autenticación exitosa
+            return res.status(200).json({ message: 'Autenticación exitosa', user });
+        } else {
+            // Contraseña incorrecta
+            return res.status(401).json({ message: 'Credenciales incorrectas'});
+        }
     } catch (error) {
-    console.error("Error al autenticar al usuario:", error);
-    res.status(500).json({ message: "Error interno del servidor" });
+      // Manejo de errores
+        console.error('Error al autenticar al usuario:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
     }
-};
+}
 
 const verificarContraseña = async (contraseñaIngresada, contraseñaAlmacenada) => {
     try {
