@@ -13,10 +13,10 @@ const Usuario = sequelize.define('Usuario', {
     id_tipo_usuario: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
+        /* references: {
             model: Tipo_Usuario, // Hace referencia al modelo de Tipo_Usuario
             key: 'id_tipo_usuario' // Hace referencia a la columna id_tipo_usuario de Tipo_Usuario
-        }
+        } */
     },
     nombre_usuario: {
         type: DataTypes.STRING,
@@ -46,6 +46,10 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
+    fecha_modificacion: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
     contrasenia_usuario: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -55,5 +59,7 @@ const Usuario = sequelize.define('Usuario', {
     tableName: 'usuario',
     timestamps: false, // desabilita la creacion automatica de fechas
 });
+
+Usuario.belongsTo(Tipo_Usuario, { foreignKey: 'id_tipo_usuario' });
 
 module.exports = Usuario;
