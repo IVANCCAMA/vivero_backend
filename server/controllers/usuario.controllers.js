@@ -1,5 +1,7 @@
 const Usuario = require('../models/usuario');
 
+
+
 const crearUsuario = async (req, res) => {
     const { id_tipo_usuario, nombre_usuario, ci_usuario, celular_usuario, 
         correo_usuario ,fecha_nacimiento_usuario, genero_usuario,contrasenia_usuario,
@@ -75,6 +77,41 @@ const obtenerUsuario = async (req, res) => {
     }
 };
 
+
+/* INICIAR SESION */
+
+const autenticarUsuario = async (req, res) => {
+    try {
+        const { correo_usuario, contrasenia_usuario } = req.body;
+        const usuario = await Usuario.findOne({ where: { correo_usuario } });
+
+        if (!usuario) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+
+    const contraseniaValida = await verificarContraseña(contrasenia_usuario, usuario.contraseña);
+
+    if (!contraseniaValida) {
+        return res.status(401).json({ message: "Contraseña incorrecta" });
+    }
+
+    res.status(200).json({ message: "Autenticación exitosa" });
+    } catch (error) {
+    console.error("Error al autenticar al usuario:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
+    }
+};
+
+const verificarContraseña = async (contraseñaIngresada, contraseñaAlmacenada) => {
+    try {
+    return await compare(contraseñaIngresada, contraseñaAlmacenada);
+    } catch (error) {
+    console.error("Error al verificar la contraseña:", error);
+    return false;
+    }
+};
+
+
 const modificarUsuario = async (req, res) => {
     const idUsuario = req.params.id;
     const { 
@@ -134,4 +171,4 @@ const eliminarUsuario = async (req, res) => {
     }
 };
 
-module.exports = { crearUsuario , obtenerUsuarios, modificarUsuario, eliminarUsuario,obtenerUsuario };
+module.exports = { crearUsuario , obtenerUsuarios, modificarUsuario, eliminarUsuario,obtenerUsuario, autenticarUsuario, };

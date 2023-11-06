@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const usuario = require('../controllers/usuario.controllers');
 
+
+// Autenticar usuario
+router.post('/autenticar', usuario.autenticarUsuario); 
+
+
+
 // obtener usuarios
 router.get('/', usuario.obtenerUsuarios);
 
