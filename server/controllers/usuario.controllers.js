@@ -70,11 +70,34 @@ const obtenerUsuarios = async (req, res) => {
 const obtenerUsuario = async (req, res) => {
     const idUsuario = req.params.id;
     try {
-        const usuario = await Usuario.findByPk(idUsuario);
+        const usuario = await Usuario.findByPk(idUsuario, {
+            include: TipoUsuario
+        });
         if (!usuario) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
-        res.status(200).json(usuario);
+        const options = {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+        };
+
+        const fechaCreacion = new Date(usuario.fecha_registro_usuario);
+        const fechaModificacion = usuario.fecha_modificacion
+            ? new Date(usuario.fecha_modificacion)
+            : null;
+
+        const usuarioFormateado = {
+            ...usuario.toJSON(),
+            fecha_registro_usuario: fechaCreacion.toLocaleString('es-ES', options),
+            fecha_modificacion: fechaModificacion ? fechaModificacion.toLocaleString('es-ES', options): null,
+            tipo_usuario: usuario.TipoUsuario ? usuario.TipoUsuario.tipo_usuario : null,
+        };
+
+        res.status(200).json(usuarioFormateado);
     } catch (error) {
         console.error('Error al obtener el usuario:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
