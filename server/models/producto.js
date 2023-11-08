@@ -62,6 +62,10 @@ const Producto = sequelize.define('Producto', {
         type: DataTypes.REAL,
         allowNull: false,
     },
+    cod_producto: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
 }, {
     // nombre de la tabla
     tableName: 'producto',
