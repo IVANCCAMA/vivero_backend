@@ -5,9 +5,14 @@ const crearProducto = async (req, res) => {
     const { id_categoria, nombre_producto, precio_total_producto, tamanio_producto, 
         imagen_producto ,descripcion_producto, stok_actual_producto, stok_min_producto, precio_inicial_producto,
         margen_producto} = req.body;
+    
+    const idProducto = await obtenerUltimoID();
+    const codProducto = crearCodigoProducto(idProducto, nombre_producto);
+    
 
     try {
         const nuevoProducto = await Producto.create({
+            id_producto: idProducto,
             id_categoria,
             nombre_producto,
             precio_total_producto,
@@ -17,7 +22,8 @@ const crearProducto = async (req, res) => {
             stok_actual_producto,
             stok_min_producto,
             precio_inicial_producto,
-            margen_producto
+            margen_producto,
+            cod_producto: codProducto,
         });
         // Formatea la fecha de creación antes de enviarla en la respuesta
         const fechaCreacion = new Date(nuevoProducto.fecha_creacion);
@@ -31,6 +37,29 @@ const crearProducto = async (req, res) => {
         console.error('Error al crear Producto:', error);
         return res.status(500).json({ error: 'Error al crear Producto', message: error.message });
     }
+}
+
+async function obtenerUltimoID () {
+    try {
+        const resultado = await Producto.max('id_producto');
+        return resultado+1 || 0; // Si no hay productos, devuelve 0
+    } catch (error) {
+        console.error('Error al obtener el último ID de producto:', error);
+        throw error;
+    }
+}
+
+function crearCodigoProducto(idProducto, nombre_producto) {
+    // Formatea el id_producto a un formato de dos dígitos, por ejemplo, "01" en lugar de "1"
+    const idFormateado = String(idProducto).padStart(2, '0');
+    
+    // Convierte el nombre del producto a mayúsculas y toma las primeras tres letras
+    const nombreFormateado = nombre_producto.slice(0, 3).toUpperCase();
+    
+    // Combina el nombre formateado y el id formateado
+    const codigoProducto = `${nombreFormateado}-${idFormateado}`;
+    
+    return codigoProducto; 
 }
 
 const obtenerProductos = async (req, res) => {
@@ -108,6 +137,7 @@ const obtenerProducto = async (req, res) => {
 const modificarProducto = async (req, res) => {
     const idProducto = req.params.id;
     const { 
+        id_categoria,
         nombre_producto,
         precio_total_producto,
         tamanio_producto, 
@@ -129,6 +159,7 @@ const modificarProducto = async (req, res) => {
 
         // Actualizar el producto con los nuevos datos
         await productoModificado.update({
+            id_categoria,
             nombre_producto,
             precio_total_producto,
             tamanio_producto, 
@@ -168,4 +199,4 @@ const eliminarProducto = async (req, res) => {
     }
 };
 
-module.exports = { crearProducto , obtenerProductos, modificarProducto, eliminarProducto,obtenerProducto };
+module.exports = { crearProducto , obtenerProductos, modificarProducto, eliminarProducto, obtenerProducto };

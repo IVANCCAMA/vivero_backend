@@ -13,10 +13,6 @@ const Producto = sequelize.define('Producto', {
     id_categoria: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        /* references: {
-            model: Categoria, // Hace referencia al modelo de Categoria
-            key: 'id_categoria' // Hace referencia a la columna id_categoria de Categoria
-        } */
     },
     nombre_producto: {
         type: DataTypes.STRING,
@@ -64,7 +60,7 @@ const Producto = sequelize.define('Producto', {
     },
     cod_producto: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
 }, {
     // nombre de la tabla

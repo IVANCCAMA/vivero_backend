@@ -43,7 +43,7 @@ const Usuario = sequelize.define('Usuario', {
         allowNull: false,
     },
     fecha_registro_usuario: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DATE,
         allowNull: true,
     },
     fecha_modificacion: {
