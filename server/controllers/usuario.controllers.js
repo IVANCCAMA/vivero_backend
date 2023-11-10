@@ -135,6 +135,7 @@ const autenticarUsuario = async (req, res) => {
 const modificarUsuario = async (req, res) => {
     const idUsuario = req.params.id;
     const { 
+        id_tipo_usuario,
         nombre_usuario,
         ci_usuario,
         celular_usuario, 
@@ -154,6 +155,7 @@ const modificarUsuario = async (req, res) => {
 
         // Actualizar el usuario con los nuevos datos
         await usuarioModificado.update({
+            id_tipo_usuario,
             nombre_usuario,
             ci_usuario,
             celular_usuario, 
