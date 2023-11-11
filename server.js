@@ -7,6 +7,7 @@ const productoRoutes = require('./server/routes/producto.routes');
 const usuarioRoutes = require('./server/routes/usuario.routes')
 const tipo_usuarioRoutes = require('./server/routes/tipoUsuario.routes');
 const transaccionRoutes = require('./server/routes/transaccion.routes');
+const tipo_transaccionRoutes = require ('./server/routes/tipoTransaccion.routes');
 
 const app = express();
 
@@ -31,6 +32,8 @@ app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/tipoUsuario', tipo_usuarioRoutes);
 
 app.use('/api/transaccion', transaccionRoutes);
+
+app.use('/api/tipotransaccion', tipo_transaccionRoutes);
 
 
 // Prueba navegador
