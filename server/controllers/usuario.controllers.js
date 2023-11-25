@@ -37,6 +37,9 @@ const obtenerUsuarios = async (req, res) => {
     try {
         const usuarios = await Usuario.findAll({
             include: TipoUsuario,
+            order: [
+                ['fecha_modificacion', 'DESC'],
+            ],
         });
 
         // Formatea las fechas antes de enviarlas en la respuesta
