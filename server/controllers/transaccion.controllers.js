@@ -38,6 +38,9 @@ const obtenerTransacciones = async (req, res) => {
                 { model: Producto },
                 { model: Usuario },
             ],
+            order: [
+                ['fecha_transaccion', 'DESC'],
+            ],
         });
 
         // Formatea las fechas antes de enviarlas en la respuesta

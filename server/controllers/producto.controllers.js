@@ -27,11 +27,13 @@ const crearProducto = async (req, res) => {
         });
         // Formatea la fecha de creación antes de enviarla en la respuesta
         const fechaCreacion = new Date(nuevoProducto.fecha_creacion);
+        const fechaModificacion = new Date(nuevoProducto.fecha_modificacion);
         const productoFormateado = {
             ...nuevoProducto.toJSON(),
-            fecha_creacion: fechaCreacion.toLocaleString()
+            fecha_creacion: fechaCreacion.toLocaleString(),
+            fecha_modificacion: fechaModificacion.toLocaleString(),
         };
-        
+        console.log("Producto enviado", productoFormateado);
         return res.status(201).json({ mensaje: 'Producto creado exitosamente', producto: productoFormateado });
     } catch (error) {
         console.error('Error al crear Producto:', error);
@@ -66,6 +68,9 @@ const obtenerProductos = async (req, res) => {
     try {
         const productos = await Producto.findAll({
             include: Categoria,
+            order: [
+                ['fecha_modificacion', 'DESC'],
+            ],            
         });
 
         // Formatea las fechas antes de enviarlas en la respuesta
