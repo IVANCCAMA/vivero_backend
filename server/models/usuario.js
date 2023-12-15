@@ -13,10 +13,6 @@ const Usuario = sequelize.define('Usuario', {
     id_tipo_usuario: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        /* references: {
-            model: Tipo_Usuario, // Hace referencia al modelo de Tipo_Usuario
-            key: 'id_tipo_usuario' // Hace referencia a la columna id_tipo_usuario de Tipo_Usuario
-        } */
     },
     nombre_usuario: {
         type: DataTypes.STRING,
@@ -28,7 +24,7 @@ const Usuario = sequelize.define('Usuario', {
     },
     celular_usuario: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     correo_usuario: {
         type: DataTypes.STRING,
@@ -53,6 +49,10 @@ const Usuario = sequelize.define('Usuario', {
     contrasenia_usuario: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    activo_usuario: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
     },
 }, {
     // nombre de la tabla

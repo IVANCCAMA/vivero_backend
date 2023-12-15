@@ -7,6 +7,7 @@ const crearUsuario = async (req, res) => {
     const { id_tipo_usuario, nombre_usuario, ci_usuario, celular_usuario, 
         correo_usuario ,fecha_nacimiento_usuario, genero_usuario,contrasenia_usuario,
         } = req.body;
+    const actividad_inicial = false;
 
     try {
         const nuevoUsuario = await Usuario.create({
@@ -18,6 +19,7 @@ const crearUsuario = async (req, res) => {
             fecha_nacimiento_usuario,
             genero_usuario,
             contrasenia_usuario,
+            activo_usuario: actividad_inicial,
         });
         // Formatea la fecha de creación antes de enviarla en la respuesta
         const fechaCreacion = new Date(nuevoUsuario.fecha_registro_usuario);
@@ -145,7 +147,8 @@ const modificarUsuario = async (req, res) => {
         correo_usuario,
         fecha_nacimiento_usuario,
         genero_usuario,
-        contrasenia_usuario
+        contrasenia_usuario,
+        activo_usuario,
     } = req.body;
 
     try {
@@ -165,7 +168,8 @@ const modificarUsuario = async (req, res) => {
             correo_usuario,
             fecha_nacimiento_usuario,
             genero_usuario,
-            contrasenia_usuario
+            contrasenia_usuario,
+            activo_usuario,
         });
 
     return res.status(200).json({ message: 'Usuario modificada exitosamente', tipo_usuario: usuarioModificado });
