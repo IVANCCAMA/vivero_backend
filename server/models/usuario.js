@@ -50,8 +50,8 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    estado_usuario: {
-        type: DataTypes.STRING,
+    activo_usuario: {
+        type: DataTypes.BOOLEAN,
         allowNull: true,
     },
 }, {
