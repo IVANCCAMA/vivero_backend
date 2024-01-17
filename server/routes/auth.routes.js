@@ -1,10 +1,9 @@
-import { Router } from 'express';
-import { login, protectedResource  } from '../controllers/auth.controller.js' 
+const express = require('express');
+const router = express.Router();
+const auth =  require('../controllers/auth.controller.js'); 
 
-const router = Router();
+router.post('/login', auth.login);
 
-router.post('/login', login);
+router.get('/recurso-protegido', auth.protectedResource);
 
-router.get('/recurso-protegido', protectedResource);
-
-export default router;
+module.exports = router;
