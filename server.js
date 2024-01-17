@@ -1,28 +1,29 @@
-import express from 'express';
-import cors from 'cors';
-import { json, urlencoded } from 'body-parser';
-import { authenticate } from './server/config/bd';
-import categoriaRoutes from './server/routes/categoria.routes';
-import productoRoutes from './server/routes/producto.routes';
-import usuarioRoutes from './server/routes/usuario.routes';
-import tipo_usuarioRoutes from './server/routes/tipoUsuario.routes';
-import transaccionRoutes from './server/routes/transaccion.routes';
-import tipo_transaccionRoutes from './server/routes/tipoTransaccion.routes';
-import authRoute  from "./server/routes/auth.routes";
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const dbConfig = require('./server/config/bd');
+const categoriaRoutes = require('./server/routes/categoria.routes');
+const productoRoutes = require('./server/routes/producto.routes');
+const usuarioRoutes = require('./server/routes/usuario.routes')
+const tipo_usuarioRoutes = require('./server/routes/tipoUsuario.routes');
+const transaccionRoutes = require('./server/routes/transaccion.routes');
+const tipo_transaccionRoutes = require ('./server/routes/tipoTransaccion.routes');
+const authRoute = require('./server/routes/auth.routes');
 
 
 const app = express();
 
 // Middleware
 app.use(cors());  // Configurar CORS
-app.use(json());  // Analizar solicitudes JSON
-app.use(urlencoded({ extended: true }));  // Analizar solicitudes URL codificadas
+app.use(bodyParser.json());  // Analizar solicitudes JSON
+app.use(bodyParser.urlencoded({ extended: true }));  // Analizar solicitudes URL codificadas
 
 // Conexión a la base de datos
-authenticate()
+dbConfig
+  .authenticate()
   .then(() => console.log('Conexión a la base de datos establecida.'))
   .catch((error) => console.error('No se pudo conectar a la base de datos:', error));
-
+  
 // Rutas
 app.use('/api/categorias/', categoriaRoutes);
 

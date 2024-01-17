@@ -1,4 +1,4 @@
-import { sign, verify } from 'jsonwebtoken';
+const json =  require('jsonwebtoken');
 
 const crypto = require('crypto');
 
@@ -15,7 +15,7 @@ const login = async (req, res) => {
 
     // Ejemplo de verificación básica, reemplázalo con tu lógica de autenticación real
     if (username === 'usuario' && password === 'contraseña') {
-        const token = sign({ username }, secretKey, { expiresIn: '1h' });
+        const token = json.sign({ username }, secretKey, { expiresIn: '1h' });
         res.json({ token });
     } else {
         res.status(401).json({ error: 'Credenciales incorrectas' });
@@ -29,7 +29,7 @@ const protectedResource = async (req, res) => {
         return res.status(401).json({ error: 'Token no proporcionado' });
     }
 
-    verify(token, secretKey, (err, decoded) => {
+    json.verify(token, secretKey, (err, decoded) => {
         if (err) {
             return res.status(401).json({ error: 'Token inválido' });
         }
