@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/bd');
+const sequelize = require('../config/bd.js');
 
 const Categoria = sequelize.define('Categoria', {
     // atributos de tabla
