@@ -42,7 +42,7 @@ app.use('/api/auth', authRoute)
 
 // Prueba navegador
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to IVI application." });
+  res.json({ message: "Welcome to IVI application. Arregladoooo" });
 });
 
 const PORT = process.env.PORT || 4000;
