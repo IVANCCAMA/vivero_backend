@@ -1,5 +1,5 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/bd.js');
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize('sqlite::memory:');
 
 const TipoTransaccion = sequelize.define('TipoTransaccion', {
     // atributos de tabla

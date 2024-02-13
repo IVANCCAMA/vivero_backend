@@ -1,11 +1,11 @@
 const { config } = require('dotenv');
 const { Sequelize } = require('sequelize');
 
-config()
-console.log(">>>>>>>>", process.env.DB_HOST, "\n");
-console.log(">>>>>>>>", process.env.DB_NAME, "\n");
-const sequelize = new Sequelize(process.env.DB_HOST, {
-  dialect: 'postgres',  // O el dialecto de tu base de datos
+config();
+
+// Crear la conexión de Sequelize
+const sequelize = new Sequelize(process.env.DB_URL, {
+  dialect: 'postgres',
   dialectOptions: {
     ssl: {
       require: true,
@@ -15,5 +15,35 @@ const sequelize = new Sequelize(process.env.DB_HOST, {
   timezone: 'America/La_Paz',
 });
 
+const tipoUsuario  = require('../models/tipoUsuario')
+
+tipoUsuario.sync({ force: true });
+console.log("The table for the User model was just (re)created!");
+
+const usuario  = require('../models/usuario')
+
+usuario.sync({ force: true });
+console.log("The table for the User model was just (re)created!");
+
+const categoria  = require('../models/categoria')
+
+categoria.sync({ force: true });
+console.log("The table for the User model was just (re)created!");
+
+const producto  = require('../models/producto')
+
+producto.sync({ force: true });
+console.log("The table for the User model was just (re)created!");
+
+const tipoTransaccion  = require('../models/tipoTransaccion')
+
+tipoTransaccion.sync({ force: true });
+console.log("The table for the User model was just (re)created!");
+
+const transaccion  = require('../models/transaccion')
+
+transaccion.sync({ force: true });
+console.log("The table for the User model was just (re)created!");
 
 module.exports = sequelize;
+

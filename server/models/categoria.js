@@ -1,5 +1,5 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/bd.js');
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize('sqlite::memory:');
 
 const Categoria = sequelize.define('Categoria', {
     // atributos de tabla
@@ -22,5 +22,8 @@ const Categoria = sequelize.define('Categoria', {
     tableName: 'categoria',
     timestamps: false, // desabilita la creacion automatica de fechas
 });
+
+// Verifica si el modelo se ha definido correctamente
+console.log("Verificaión>>>>", Categoria === sequelize.models.Categoria); // true
 
 module.exports = Categoria;

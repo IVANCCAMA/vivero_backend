@@ -1,5 +1,5 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/bd.js');
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize('sqlite::memory:');
 const Categoria = require('./categoria'); 
 
 const Producto = sequelize.define('Producto', {
@@ -69,5 +69,7 @@ const Producto = sequelize.define('Producto', {
 });
 
 Producto.belongsTo(Categoria, { foreignKey: 'id_categoria' });
+console.log("Verificaión>>>>", Producto === sequelize.models.Producto); // true
+
 
 module.exports = Producto;
